@@ -1,17 +1,34 @@
 ﻿using Microsoft.Xrm.Tooling.Connector;
+using System;
+using System.IO;
+using System.Text.Json;
 
 namespace Logistics.Dynamics365.Core.Models
 {
+    public class DynamicsConnectionConfig
+    {
+        public string Url { get; set; }
+        public string User { get; set; }
+        public string Password { get; set; }
+    }
     public class Connections
     {
-        public static CrmServiceClient GetEnviroment2()
+        private static DynamicsConnectionConfig LoadDynamicsConfig()
         {
+            string fileName = "credentials.json";
+            string jsonString = File.ReadAllText(fileName);
+            return JsonSerializer.Deserialize<DynamicsConnectionConfig>(jsonString);
+        }
 
-            var user = "GlobalLogistics@LogisticsTCC.onmicrosoft.com";
-            var password = "Equipe4tcc@";
-            var url = "https://org81f34f5c.crm2.dynamics.com/";
+        public static CrmServiceClient GetEnvironment2()
+        {
+            var config = LoadDynamicsConfig();
+            if (config == null)
+            {
+                throw new InvalidOperationException("Falha ao carregar a configuração do Dynamics.");
+            }
 
-            CrmServiceClient crmServiceClient = new CrmServiceClient("AuthType=Office365; Url=" + url + "; Username=" + user + "; Password=" + password);
+            CrmServiceClient crmServiceClient = new CrmServiceClient($"AuthType=Office365; Url={config.Url}; Username={config.User}; Password={config.Password}");
 
             return crmServiceClient;
         }

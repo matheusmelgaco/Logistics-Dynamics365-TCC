@@ -11,6 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logistics.Dynamics365.Core"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logistics.Dynamics365.Plugins.Ambiente1", "Logistics.Dynamics365.Plugins.Ambiente1\Logistics.Dynamics365.Plugins.Ambiente1.csproj", "{10C9D284-0935-4C7A-A601-46F4D1A03400}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens de Solução", "{A9FC02EF-BFBC-4199-83EE-C2CF64A6796B}"
+	ProjectSection(SolutionItems) = preProject
+		credentials.json = credentials.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

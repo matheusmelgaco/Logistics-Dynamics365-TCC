@@ -20,5 +20,10 @@ namespace Logistics.Dynamics365.Plugins.Ambiente1.Gerenciadores
             _context = context;
 
         }
+
+        public void SincronizarProduto(Entity produto)
+        {
+            // Lógica de sincronização
+        }
     }
 }

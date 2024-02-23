@@ -16,9 +16,11 @@ namespace Logistics.Dynamics365.Plugins.Ambiente2.Plugins
             IOrganizationService service = serviceFactory.CreateOrganizationService(context.UserId);
             ITracingService tracingService = (ITracingService)serviceProvider.GetService(typeof(ITracingService));
 
+            Entity produto = (Entity)context.InputParameters["Target"];
 
             try
             {
+                
             }
             catch (Exception ex)
             {
