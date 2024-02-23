@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34316.72
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logistics.Dynamics365.Plugins.Dynamics2", "Logistics.Dynamics365.Plugins.Ambiente2\Logistics.Dynamics365.Plugins.Dynamics2.csproj", "{E5E758F0-50BD-4FCD-A5AA-A91FEF8FF7AB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logistics.Dynamics365.Customizations", "Logistics.Dynamics365.Customizações\Logistics.Dynamics365.Customizations.csproj", "{3E5C8E8D-16D8-47DA-B6F3-9D504F3EDB70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logistics.Dynamics365.Core", "Logistics.Dynamics365.Core\Logistics.Dynamics365.Core.csproj", "{DABCA74D-D882-475D-A11F-A89D0F72EF42}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logistics.Dynamics365.Plugins.Ambiente1", "Logistics.Dynamics365.Plugins.Ambiente1\Logistics.Dynamics365.Plugins.Ambiente1.csproj", "{10C9D284-0935-4C7A-A601-46F4D1A03400}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E5E758F0-50BD-4FCD-A5AA-A91FEF8FF7AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5E758F0-50BD-4FCD-A5AA-A91FEF8FF7AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5E758F0-50BD-4FCD-A5AA-A91FEF8FF7AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5E758F0-50BD-4FCD-A5AA-A91FEF8FF7AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E5C8E8D-16D8-47DA-B6F3-9D504F3EDB70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E5C8E8D-16D8-47DA-B6F3-9D504F3EDB70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E5C8E8D-16D8-47DA-B6F3-9D504F3EDB70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E5C8E8D-16D8-47DA-B6F3-9D504F3EDB70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DABCA74D-D882-475D-A11F-A89D0F72EF42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DABCA74D-D882-475D-A11F-A89D0F72EF42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DABCA74D-D882-475D-A11F-A89D0F72EF42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DABCA74D-D882-475D-A11F-A89D0F72EF42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10C9D284-0935-4C7A-A601-46F4D1A03400}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10C9D284-0935-4C7A-A601-46F4D1A03400}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10C9D284-0935-4C7A-A601-46F4D1A03400}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10C9D284-0935-4C7A-A601-46F4D1A03400}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8FE78FD7-D66E-4A30-B6BD-CD738C14E061}
+	EndGlobalSection
+EndGlobal
