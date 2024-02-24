@@ -1,35 +1,42 @@
-﻿using Microsoft.Xrm.Tooling.Connector;
+﻿using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
+using Microsoft.Xrm.Tooling.Connector;
 using System;
-using System.IO;
-using System.Text.Json;
+using System.Linq;
 
 namespace Logistics.Dynamics365.Core.Models
 {
-    public class DynamicsConnectionConfig
+    public static class Connections
     {
-        public string Url { get; set; }
-        public string User { get; set; }
-        public string Password { get; set; }
-    }
-    public class Connections
-    {
-        private static DynamicsConnectionConfig LoadDynamicsConfig()
+        public static CrmServiceClient GetEnvironment2(IOrganizationService service)
         {
-            string fileName = "credentials.json";
-            string jsonString = File.ReadAllText(fileName);
-            return JsonSerializer.Deserialize<DynamicsConnectionConfig>(jsonString);
-        }
+            string entityName = "lgs_configuracao_dynamics";
+            string urlField = "lgs_url";
+            string userField = "lgs_user";
+            string passwordField = "lgs_password";
 
-        public static CrmServiceClient GetEnvironment2()
-        {
-            var config = LoadDynamicsConfig();
-            if (config == null)
+            QueryExpression query = new QueryExpression(entityName)
             {
-                throw new InvalidOperationException("Falha ao carregar a configuração do Dynamics.");
+                ColumnSet = new ColumnSet(new string[] { urlField, userField, passwordField })
+            };
+         
+            EntityCollection results = service.RetrieveMultiple(query);
+            if (results.Entities.Count == 0)
+            {
+                throw new InvalidOperationException("Configurações de conexão com o Dynamics não encontradas.");
             }
 
-            CrmServiceClient crmServiceClient = new CrmServiceClient($"AuthType=Office365; Url={config.Url}; Username={config.User}; Password={config.Password}");
+            Entity config = results.Entities.First();
+            string url = config.GetAttributeValue<string>(urlField);
+            string user = config.GetAttributeValue<string>(userField);
+            string password = config.GetAttributeValue<string>(passwordField);
 
+            if (string.IsNullOrEmpty(url) || string.IsNullOrEmpty(user) || string.IsNullOrEmpty(password))
+            {
+                throw new InvalidOperationException("Configurações de conexão com o Dynamics estão incompletas.");
+            }
+
+            CrmServiceClient crmServiceClient = new CrmServiceClient($"AuthType=Office365; Url={url}; Username={user}; Password={password}");
             return crmServiceClient;
         }
     }

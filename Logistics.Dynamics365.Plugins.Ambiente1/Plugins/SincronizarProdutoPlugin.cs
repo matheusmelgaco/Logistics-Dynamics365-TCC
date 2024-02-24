@@ -18,13 +18,12 @@ namespace Logistics.Dynamics365.Plugins.Ambiente1.Plugins
             IOrganizationService service = serviceFactory.CreateOrganizationService(context.UserId);
             ITracingService tracingService = (ITracingService)serviceProvider.GetService(typeof(ITracingService));
 
-            Entity produto = (Entity)context.InputParameters["Target"];
 
             GerenciadorProdutos gerenciadorProdutos = new GerenciadorProdutos(service, tracingService, context);
 
             try
             {
-                gerenciadorProdutos.SincronizarProduto(produto);
+                gerenciadorProdutos.ProcessarSincronização();
             }
             catch (Exception ex)
             {

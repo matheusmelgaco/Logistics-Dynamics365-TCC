@@ -1,13 +1,9 @@
 ﻿using Microsoft.Xrm.Sdk;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logistics.Dynamics365.Plugins.Ambiente2.Plugins
 {
-    public class BloquearCriaçãoProdutoPlugin: IPlugin
+    public class BloquearCriaçãoProdutoPlugin : IPlugin
     {
         public void Execute(IServiceProvider serviceProvider)
         {
@@ -16,18 +12,24 @@ namespace Logistics.Dynamics365.Plugins.Ambiente2.Plugins
             IOrganizationService service = serviceFactory.CreateOrganizationService(context.UserId);
             ITracingService tracingService = (ITracingService)serviceProvider.GetService(typeof(ITracingService));
 
-            Entity produto = (Entity)context.InputParameters["Target"];
-
-            try
+            if (context.InputParameters.Contains("Target") && context.InputParameters["Target"] is Entity produto)
             {
-                
-            }
-            catch (Exception ex)
-            {
-                tracingService.Trace("Erro: {0}", ex.ToString());
-                throw new InvalidPluginExecutionException("Ocorreu um erro em BloquearCriaçãoProduto.", ex);
+                if (context.MessageName.ToLower() == "create" && produto.LogicalName == "product")
+                {
+                    try
+                    {
+                        if (!produto.Contains("lgs_permitir_criacao") || !(bool)produto["lgs_permitir_criacao"])
+                        {
+                            throw new InvalidPluginExecutionException("A criação de direta de produtos não é permitida no Ambiente 2");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        tracingService.Trace("Erro ao bloquear criação de produto: {0}", ex.ToString());
+                        throw; 
+                    }
+                }
             }
         }
     }
 }
-
