@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Logistics.Dynamics365.Plugins.Ambiente1.Plugins
 {
-    public class SincronizarProdutoPlugin : IPlugin
+    public class OportunidadePlugin : IPlugin
 
     {
         public void Execute(IServiceProvider serviceProvider)
@@ -19,16 +19,16 @@ namespace Logistics.Dynamics365.Plugins.Ambiente1.Plugins
             ITracingService tracingService = (ITracingService)serviceProvider.GetService(typeof(ITracingService));
 
 
-            GerenciadorProdutos gerenciadorProdutos = new GerenciadorProdutos(service, tracingService, context);
+            GerenciadorOportunidade gerenciadorOportunidades = new GerenciadorOportunidade(service, tracingService, context);
 
             try
             {
-                gerenciadorProdutos.ProcessarSincronização();
+                gerenciadorOportunidades.ProcessarIntegracao();
             }
             catch (Exception ex)
             {
                 tracingService.Trace("Erro: {0}", ex.ToString());
-                throw new InvalidPluginExecutionException("Ocorreu um erro em SincronizarProdutoPlugin.", ex);
+                throw new InvalidPluginExecutionException("Ocorreu um erro em OportunidadePlugin.", ex);
             }
         }
     }

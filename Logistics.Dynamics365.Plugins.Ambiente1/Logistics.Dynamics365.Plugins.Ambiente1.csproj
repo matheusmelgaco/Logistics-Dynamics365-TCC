@@ -120,9 +120,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Gerenciadores\GerenciadorOportunidade.cs" />
     <Compile Include="Gerenciadores\GerenciadorProdutos.cs" />
-    <Compile Include="Plugins\SincronizarProdutoPlugin.cs" />
+    <Compile Include="Plugins\OportunidadePlugin.cs" />
+    <Compile Include="Plugins\ProdutoPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositório\RepositorioOportunidade.cs" />
     <Compile Include="Repositório\RepositorioProduto.cs" />
   </ItemGroup>
   <ItemGroup>
