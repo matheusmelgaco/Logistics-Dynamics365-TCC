@@ -39,19 +39,21 @@ namespace Logistics.Dynamics365.Plugins.Ambiente1.Repositório
         {
             string prefixo = "OPP-";
             int numeroSequencial = GerarNumeroSequencial();
-            string sufixoAlfanumerico = GerarSufixoAlfanumerico();
+            string sufixoAmbienteEAlfanumerico = "A1" + GerarSufixoAlfanumerico();
 
-            string identificador = $"{prefixo}{numeroSequencial}-{sufixoAlfanumerico}";
+            string identificador = $"{prefixo}{numeroSequencial}-{sufixoAmbienteEAlfanumerico}";
 
             while (VerificarIdentificadorExiste(identificador))
             {
                 numeroSequencial = GerarNumeroSequencial();
-                sufixoAlfanumerico = GerarSufixoAlfanumerico();
-                identificador = $"{prefixo}{numeroSequencial}-{sufixoAlfanumerico}";
+                sufixoAmbienteEAlfanumerico = "A1" + GerarSufixoAlfanumerico();
+                identificador = $"{prefixo}{numeroSequencial}-{sufixoAmbienteEAlfanumerico}";
             }
 
             return identificador;
         }
+
+
 
         private bool VerificarIdentificadorExiste(string identificador)
         {
@@ -108,14 +110,12 @@ namespace Logistics.Dynamics365.Plugins.Ambiente1.Repositório
             var numeros = "0123456789";
 
             var sufixo = new StringBuilder();
-
-            sufixo.Append(letras[random.Next(letras.Length)]);
-            sufixo.Append(numeros[random.Next(numeros.Length)]);
-            sufixo.Append(letras[random.Next(letras.Length)]);
+            sufixo.Append(letras[random.Next(letras.Length)]); 
             sufixo.Append(numeros[random.Next(numeros.Length)]);
 
             return sufixo.ToString();
         }
+
 
         public void IntegrarComAmbiente2(Entity oportunidade)
         {
