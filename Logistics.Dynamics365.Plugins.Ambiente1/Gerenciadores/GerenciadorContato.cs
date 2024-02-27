@@ -1,10 +1,6 @@
-﻿using Logistics.Dynamics365.Plugins.Ambiente1.Repositório;
-using Microsoft.Xrm.Sdk;
+﻿using Microsoft.Xrm.Sdk;
+using Logistics.Dynamics365.Plugins.Ambiente1.Repositório;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logistics.Dynamics365.Plugins.Ambiente1.Gerenciadores
 {
@@ -21,27 +17,24 @@ namespace Logistics.Dynamics365.Plugins.Ambiente1.Gerenciadores
             _context = context;
         }
 
-        public void ValidarDuplicidade(Entity contato)
+        public void ValidarDuplicidadeCPF()
         {
-            if (contato.Contains("lgs_cpf"))
+            if (_context.InputParameters.Contains("Target") && _context.InputParameters["Target"] is Entity)
             {
-                string cpf = contato["lgs_cpf"].ToString();
+                Entity entidade = (Entity)_context.InputParameters["Target"];
+                if (entidade.LogicalName != "contact") return;
 
-                _tracingService.Trace($"CPF: {cpf}");
-                var contatos = RepositorioContato.BuscarContatoPorCPF(cpf, _service);
-                _tracingService.Trace($"Contatos: {contatos.Entities.Count}");
-                bool isUpdate = _context.MessageName.ToLower() == "update";
-                bool isDuplicate = contatos.Entities.Count > 0;
+                string cpf = entidade.Attributes.Contains("lgs_cpf") ? entidade.Attributes["lgs_cpf"].ToString() : string.Empty;
 
-                if (isUpdate && isDuplicate)
+                if (!string.IsNullOrEmpty(cpf))
                 {
-                    var targetId = contato.Id;
-                    isDuplicate = contatos.Entities.Any(e => e.Id != targetId);
-                }
+                    Guid recordId = entidade.Id; 
+                    bool existe = RepositorioContato.VerificarDuplicidadeCPF(_service, cpf, recordId);
 
-                if (isDuplicate)
-                {
-                    throw new InvalidPluginExecutionException($"CPF {cpf} já cadastrado. Verifique e tente novamente.");
+                    if (existe)
+                    {
+                        throw new InvalidPluginExecutionException("Um registro com este CPF já existe no sistema.");
+                    }
                 }
             }
         }

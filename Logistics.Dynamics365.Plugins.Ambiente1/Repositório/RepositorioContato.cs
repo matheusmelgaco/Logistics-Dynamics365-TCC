@@ -1,22 +1,26 @@
-﻿using Microsoft.Xrm.Sdk.Query;
-using Microsoft.Xrm.Sdk;
+﻿using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logistics.Dynamics365.Plugins.Ambiente1.Repositório
 {
     public static class RepositorioContato
     {
-        public static EntityCollection BuscarContatoPorCPF(string cpf, IOrganizationService service)
+        public static bool VerificarDuplicidadeCPF(IOrganizationService service, string cpf, Guid recordId)
         {
             QueryExpression query = new QueryExpression("contact");
-            query.ColumnSet = new ColumnSet("contactid", "fullname");
+            query.ColumnSet = new ColumnSet("lgs_cpf");
+            query.Criteria = new FilterExpression();
             query.Criteria.AddCondition("lgs_cpf", ConditionOperator.Equal, cpf);
 
-            return service.RetrieveMultiple(query);
+            if (recordId != Guid.Empty)
+            {
+                query.Criteria.AddCondition("contactid", ConditionOperator.NotEqual, recordId);
+            }
+
+            EntityCollection results = service.RetrieveMultiple(query);
+
+            return results.Entities.Count > 0;
         }
     }
 }

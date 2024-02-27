@@ -16,7 +16,6 @@ Logistics.Util = {
             width: 300
         };
 
-
         Xrm.Navigation.openAlertDialog(configuracaoTexto, configuracaoOpcoes);
 
     }

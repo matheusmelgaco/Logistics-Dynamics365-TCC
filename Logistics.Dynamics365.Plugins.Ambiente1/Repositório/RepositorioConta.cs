@@ -1,37 +1,27 @@
-﻿using Microsoft.Xrm.Sdk.Query;
-using Microsoft.Xrm.Sdk;
+﻿using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logistics.Dynamics365.Plugins.Ambiente1.Repositório
 {
-    public class RepositorioConta
+    public static class RepositorioConta
     {
-        private readonly IOrganizationService _service;
-        private readonly ITracingService _tracingService;
-        private readonly IPluginExecutionContext _context;
-
-        public RepositorioConta(IOrganizationService service, ITracingService tracingService, IPluginExecutionContext context)
-        {
-            _service = service;
-            _tracingService = tracingService;
-            _context = context;
-
-        }
-
-
-        public static EntityCollection BuscarContaPorCNPJ(string cnpj, IOrganizationService service)
+        public static bool VerificarDuplicidadeCNPJ(IOrganizationService service, string cnpj, Guid recordId)
         {
             QueryExpression query = new QueryExpression("account");
-            query.ColumnSet = new ColumnSet("accountid", "name");
+            query.ColumnSet = new ColumnSet("lgs_cnpj");
+            query.Criteria = new FilterExpression();
             query.Criteria.AddCondition("lgs_cnpj", ConditionOperator.Equal, cnpj);
 
+            // Excluir o registro atual do resultado para atualizações
+            if (recordId != Guid.Empty)
+            {
+                query.Criteria.AddCondition("accountid", ConditionOperator.NotEqual, recordId);
+            }
 
-            return service.RetrieveMultiple(query);
+            EntityCollection results = service.RetrieveMultiple(query);
+
+            return results.Entities.Count > 0;
         }
-
     }
 }

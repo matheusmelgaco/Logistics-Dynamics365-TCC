@@ -17,13 +17,12 @@ namespace Logistics.Dynamics365.Plugins.Ambiente1.Plugins
             IOrganizationService service = serviceFactory.CreateOrganizationService(context.UserId);
             ITracingService tracingService = (ITracingService)serviceProvider.GetService(typeof(ITracingService));
 
-            Entity contato = (Entity)context.InputParameters["Target"];
 
             GerenciadorContato gerenciadorContato = new GerenciadorContato(service, tracingService, context);
 
             try
             {
-                gerenciadorContato.ValidarDuplicidade(contato);
+                gerenciadorContato.ValidarDuplicidadeCPF();
             }
             catch (Exception ex)
             {
