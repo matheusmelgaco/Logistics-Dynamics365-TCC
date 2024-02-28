@@ -16,7 +16,7 @@ Logistics.Oportunidade = {
         var isIntegrada = integradaAttr.getValue();
 
         if (isIntegrada) {
-            Logistics.Util.Alerta("Esta oportunidade está integrada e não pode ser editada, mas é possível visualiza-la", "Oportunidade integrada")
+            formContext.ui.setFormNotification("Este é um registro de origem de integração e não pode ser editado.", "INFO", "integracaoOrigemNotificacao");
             var attributes = formContext.data.entity.attributes.get();
             attributes.forEach(function (attribute, i) {
                 attribute.controls.forEach(function (control, j) {
