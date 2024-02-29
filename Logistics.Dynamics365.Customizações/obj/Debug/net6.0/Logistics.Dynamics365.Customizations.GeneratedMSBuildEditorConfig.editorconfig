@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Logistics.Dynamics365.Customizations
-build_property.ProjectDir = D:\source\repos\Logistics.Dynamics365\Logistics.Dynamics365.Customizações\
+build_property.ProjectDir = C:\Users\mathe\Desktop\Logistics-TCC\Logistics.Dynamics365.Customizações\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

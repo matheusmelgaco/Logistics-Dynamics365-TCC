@@ -71,4 +71,17 @@ Logistics.Conta = {
             this.formatarCNPJ(context, "lgs_cnpj");
         }
     },
+    onNameChange: function (context) {
+        var formContext = context.getFormContext ? context.getFormContext() : context;
+        var campoNomeConta = formContext.getAttribute("name");
+        var nomeConta = campoNomeConta.getValue();
+
+        if (!nomeConta) return;
+
+        var nomeFormatado = nomeConta.toLowerCase().split(' ').map(function (palavra) {
+            return palavra.charAt(0).toUpperCase() + palavra.slice(1);
+        }).join(' ');
+
+        campoNomeConta.setValue(nomeFormatado);
+    },
 };
