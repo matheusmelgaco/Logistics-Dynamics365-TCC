@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Logistics.Dynamics365.Customizations")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8a44989f9d7a76bccd3ed10f3653fa98a1dbde15")]
 [assembly: System.Reflection.AssemblyProductAttribute("Logistics.Dynamics365.Customizations")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Logistics.Dynamics365.Customizations")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

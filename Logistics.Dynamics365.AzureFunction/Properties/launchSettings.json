@@ -1,8 +1,8 @@
 {
   "profiles": {
-    "Logistics.Dynamics365.AzureFunctions": {
+    "Logistics.Dynamics365.AzureFunction": {
       "commandName": "Project",
-      "commandLineArgs": "--port 7139",
+      "commandLineArgs": "--port 7121",
       "launchBrowser": false
     }
   }

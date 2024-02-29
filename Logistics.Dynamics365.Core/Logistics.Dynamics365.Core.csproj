@@ -114,7 +114,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Dynamics1Connections.cs" />
     <Compile Include="Models\Connections.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
