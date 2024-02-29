@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logistics.Dynamics365.Core"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logistics.Dynamics365.Plugins.Ambiente1", "Logistics.Dynamics365.Plugins.Ambiente1\Logistics.Dynamics365.Plugins.Ambiente1.csproj", "{10C9D284-0935-4C7A-A601-46F4D1A03400}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logistics.Dynamics365.AzureFunctions", "Logistics.Dynamics365.AzureFunctions\Logistics.Dynamics365.AzureFunctions.csproj", "{90846BAB-4675-4DB5-8C16-9AE308B696EE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{10C9D284-0935-4C7A-A601-46F4D1A03400}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10C9D284-0935-4C7A-A601-46F4D1A03400}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10C9D284-0935-4C7A-A601-46F4D1A03400}.Release|Any CPU.Build.0 = Release|Any CPU
-		{90846BAB-4675-4DB5-8C16-9AE308B696EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{90846BAB-4675-4DB5-8C16-9AE308B696EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{90846BAB-4675-4DB5-8C16-9AE308B696EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{90846BAB-4675-4DB5-8C16-9AE308B696EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
