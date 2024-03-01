@@ -15,12 +15,39 @@ Logistics.Contato = {
                 d += cpf[c] * ((t + 1) - c);
             }
             d = ((10 * d) % 11) % 10;
-            if (cpf[t] != d) { 
+            if (cpf[t] != d) {
                 return false;
             }
         }
         return true;
     },
+    onNameChange: function (context) {
+
+        var formContext = context.getFormContext ? context.getFormContext() : context;
+        var campoFirstName = formContext.getAttribute("firstname");
+        var campoLastName = formContext.getAttribute("lastname");
+
+        if (campoFirstName) {
+            var nomeFirstName = campoFirstName.getValue();
+            if (nomeFirstName) {
+                var nomeFormatadoFirstName = nomeFirstName.toLowerCase().split(' ').map(function (palavra) {
+                    return palavra.charAt(0).toUpperCase() + palavra.slice(1);
+                }).join(' ');
+                campoFirstName.setValue(nomeFormatadoFirstName);
+            }
+        }
+
+        if (campoLastName) {
+            var nomeLastName = campoLastName.getValue();
+            if (nomeLastName) {
+                var nomeFormatadoLastName = nomeLastName.toLowerCase().split(' ').map(function (palavra) {
+                    return palavra.charAt(0).toUpperCase() + palavra.slice(1);
+                }).join(' ');
+                campoLastName.setValue(nomeFormatadoLastName);
+            }
+        }
+    },
+
 
     formatarCPF: function (context, campoId) {
         var formContext = context.getFormContext ? context.getFormContext() : context;
@@ -58,4 +85,3 @@ Logistics.Contato = {
     },
 
 };
-
