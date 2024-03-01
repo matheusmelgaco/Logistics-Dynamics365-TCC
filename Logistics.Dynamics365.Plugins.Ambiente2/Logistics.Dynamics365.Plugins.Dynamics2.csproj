@@ -120,8 +120,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Gerenciadores\GerenciadorOportunidadeAmbiente2.cs" />
-    <Compile Include="Repositório\RepositorioOportunidadeAmbiente2.cs" />
     <Compile Include="Plugins\BloquearCriaçãoProdutoPlugin.cs" />
     <Compile Include="Plugins\OportunidadePluginAmbiente2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -137,6 +135,9 @@
     <None Include="keypair.snk" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Gerenciadores\" />
+    <Folder Include="Repositório\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -19,12 +19,16 @@ namespace Logistics.Dynamics365.Plugins.Ambiente1
                 {
                     gerenciadorConta.ValidarDuplicidade();
                 }
-                catch (Exception ex)
-                {
-                    tracingService.Trace("ContaPlugin Exception: {0}", ex.ToString());
-                    throw new InvalidPluginExecutionException($"Ocorreu um erro em ContaPlugin: {ex.Message}", ex);
-                }
+            catch (InvalidPluginExecutionException ex)
+            {
+                throw;
             }
+            catch (Exception ex)
+            {
+                tracingService.Trace("ContaPlugin Exception: {0}", ex.ToString());
+                throw new InvalidPluginExecutionException($"Ocorreu um erro em ContaPlugin: {ex.Message}", ex);
+            }
+        }
         }
     }
 

@@ -24,10 +24,14 @@ namespace Logistics.Dynamics365.Plugins.Ambiente1.Plugins
             {
                 gerenciadorContato.ValidarDuplicidadeCPF();
             }
+            catch (InvalidPluginExecutionException ex)
+            {
+                throw;
+            }
             catch (Exception ex)
             {
-                tracingService.Trace("Erro: {0}", ex.ToString());
-                throw new InvalidPluginExecutionException("Ocorreu um erro em ContatoPlugin.", ex);
+                tracingService.Trace("ContaPlugin Exception: {0}", ex.ToString());
+                throw new InvalidPluginExecutionException($"Ocorreu um erro em ContaPlugin: {ex.Message}", ex);
             }
         }
     }

@@ -130,6 +130,7 @@ namespace Logistics.Dynamics365.Plugins.Ambiente1.Repositório
                     EntityReference contatoRef = oportunidade.GetAttributeValue<EntityReference>("parentcontactid");
 
                     Entity contato = _service.Retrieve(contatoRef.LogicalName, contatoRef.Id, new ColumnSet("lgs_cpf", "firstname", "lastname"));
+                   
                     string cpf = contato.Contains("lgs_cpf") ? contato.GetAttributeValue<string>("lgs_cpf") : string.Empty;
                     string contactName = contato.Contains("firstname") ? contato.GetAttributeValue<string>("firstname") : string.Empty;
                     string contactLastName = contato.Contains("lastname") ? contato.GetAttributeValue<string>("lastname") : string.Empty;
@@ -145,7 +146,13 @@ namespace Logistics.Dynamics365.Plugins.Ambiente1.Repositório
                     _tracingService.Trace($"Contato verificado ou criado com sucesso no Ambiente 2. ID: {parentContactId}");
                     opportunityToSync["parentcontactid"] = new EntityReference("contact", parentContactId);
 
-
+                }
+                else
+                {
+                    if (opportunityToSync.Contains("parentcontactid"))
+                    {
+                        opportunityToSync.Attributes.Remove("parentcontactid");
+                    }
                 }
 
                 if (oportunidade.Contains("parentaccountid"))
@@ -170,6 +177,14 @@ namespace Logistics.Dynamics365.Plugins.Ambiente1.Repositório
                     _tracingService.Trace($"Conta verificada ou criada com sucesso no Ambiente 2. ID: {parentAccountId}");
 
                     opportunityToSync["parentaccountid"] = new EntityReference("account", parentAccountId);
+                }
+                else
+                {
+                    // Se a referência da conta foi removida no Ambiente 1, verifique e remova no Ambiente 2
+                    if (opportunityToSync.Contains("parentaccountid"))
+                    {
+                        opportunityToSync.Attributes.Remove("parentaccountid");
+                    }
                 }
 
 
