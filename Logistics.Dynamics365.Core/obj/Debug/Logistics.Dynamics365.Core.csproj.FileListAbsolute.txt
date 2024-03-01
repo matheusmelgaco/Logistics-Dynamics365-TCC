@@ -41,3 +41,9 @@ C:\Users\mathe\Desktop\Logistics-TCC\Logistics.Dynamics365.Core\obj\Debug\Logist
 C:\Users\mathe\Desktop\Logistics-TCC\Logistics.Dynamics365.Core\obj\Debug\Logistics.Dynamics365.Core.csproj.CopyComplete
 C:\Users\mathe\Desktop\Logistics-TCC\Logistics.Dynamics365.Core\obj\Debug\Logistics.Dynamics365.Core.dll
 C:\Users\mathe\Desktop\Logistics-TCC\Logistics.Dynamics365.Core\obj\Debug\Logistics.Dynamics365.Core.pdb
+C:\Users\mathe\Desktop\Logistics-TCC\Logistics.Dynamics365.AzureFunctions\bin\output\Logistics.Dynamics365.Core.dll.config
+C:\Users\mathe\Desktop\Logistics-TCC\Logistics.Dynamics365.AzureFunctions\bin\output\Logistics.Dynamics365.Core.dll
+C:\Users\mathe\Desktop\Logistics-TCC\Logistics.Dynamics365.AzureFunctions\bin\output\Logistics.Dynamics365.Core.pdb
+C:\Users\mathe\Desktop\Logistics-TCC\Logistics.Dynamics365.AzureFunction\bin\output\Logistics.Dynamics365.Core.dll.config
+C:\Users\mathe\Desktop\Logistics-TCC\Logistics.Dynamics365.AzureFunction\bin\output\Logistics.Dynamics365.Core.dll
+C:\Users\mathe\Desktop\Logistics-TCC\Logistics.Dynamics365.AzureFunction\bin\output\Logistics.Dynamics365.Core.pdb

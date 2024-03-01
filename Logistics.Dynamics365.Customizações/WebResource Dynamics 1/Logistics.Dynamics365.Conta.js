@@ -56,19 +56,43 @@ Logistics.Conta = {
     },
 
     onCnpjChange: function (context) {
-      
         var formContext = context.getFormContext ? context.getFormContext() : context;
         var campoCNPJ = formContext.getAttribute("lgs_cnpj");
-        var valorCNPJ = campoCNPJ.getValue().replace(/\D/g, '');
-        console.log("Valor do CNPJ antes da validação: ", valorCNPJ);
+        if (campoCNPJ) {
+            var valorCNPJ = campoCNPJ.getValue().replace(/\D/g, '');
+            console.log("Valor do CNPJ antes da validação: ", valorCNPJ);
 
-        if (valorCNPJ && !this.validaCNPJ(valorCNPJ)) {
-            console.log("CNPJ inválido, mostrando alerta.");
-            Logistics.Util.Alerta("O CNPJ informado é inválido.");
-            campoCNPJ.setValue("");
-        } else {
-            console.log("CNPJ válido, formatando.");
-            this.formatarCNPJ(context, "lgs_cnpj");
+            if (!/^\d{14}$/.test(valorCNPJ)) {
+                console.log("CNPJ inválido ou formato incorreto, mostrando alerta.");
+                Logistics.Util.Alerta("O CNPJ informado é inválido ou está no formato incorreto.");
+                campoCNPJ.setValue(""); 
+                return;
+            }
+
+            if (!this.validaCNPJ(valorCNPJ)) {
+                console.log("CNPJ inválido, mostrando alerta.");
+                Logistics.Util.Alerta("O CNPJ informado é inválido.");
+                campoCNPJ.setValue("");
+            } else {
+                console.log("CNPJ válido, formatando.");
+                this.formatarCNPJ(context, "lgs_cnpj");
+            }
         }
+    },
+
+
+
+    onNameChange: function (context) {
+        var formContext = context.getFormContext ? context.getFormContext() : context;
+        var campoNomeConta = formContext.getAttribute("name");
+        var nomeConta = campoNomeConta.getValue();
+
+        if (!nomeConta) return;
+
+        var nomeFormatado = nomeConta.toLowerCase().split(' ').map(function (palavra) {
+            return palavra.charAt(0).toUpperCase() + palavra.slice(1);
+        }).join(' ');
+
+        campoNomeConta.setValue(nomeFormatado);
     },
 };

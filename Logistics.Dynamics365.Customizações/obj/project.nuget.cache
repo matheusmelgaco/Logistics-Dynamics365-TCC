@@ -1,12 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "a7uN4Wai6jYJzX+NgZCVJt/yJf60pNe0dGfcb+EZ9VwwK0r2UCXbGAdBEO3r+weffPFGt/dPAbfRYAYfAK63EA==",
+  "dgSpecHash": "PG6eKTc4XRKTek5NbZSz5+nDi2lboeCtXvWRxX5lnc2ZdqDk5kBG5/Estlccs4Shdd5zw/H1kvAGQGSNwN8KZA==",
   "success": true,
-  "projectFilePath": "D:\\source\\repos\\Logistics.Dynamics365\\Logistics.Dynamics365.Customizações\\Logistics.Dynamics365.Customizations.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\Eli Vieira\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.26\\microsoft.windowsdesktop.app.ref.6.0.26.nupkg.sha512",
-    "C:\\Users\\Eli Vieira\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.26\\microsoft.netcore.app.ref.6.0.26.nupkg.sha512",
-    "C:\\Users\\Eli Vieira\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.26\\microsoft.aspnetcore.app.ref.6.0.26.nupkg.sha512"
-  ],
+  "projectFilePath": "C:\\Users\\mathe\\Desktop\\Logistics-TCC\\Logistics.Dynamics365.Customizações\\Logistics.Dynamics365.Customizations.csproj",
+  "expectedPackageFiles": [],
   "logs": []
 }

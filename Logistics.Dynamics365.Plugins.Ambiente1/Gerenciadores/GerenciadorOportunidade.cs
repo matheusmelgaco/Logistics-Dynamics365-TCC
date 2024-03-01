@@ -24,17 +24,18 @@ namespace Logistics.Dynamics365.Plugins.Ambiente1.Gerenciadores
         {
             try
             {
-                if (_context.Depth > 1)
-                {
-                    _tracingService.Trace("Ignorando execução subsequente no mesmo contexto.");
-                    return;
-                }
                 switch (_context.MessageName.ToLower())
                 {
                     case "create":
                     case "update":
                         if (_context.InputParameters.Contains("Target") && _context.InputParameters["Target"] is Entity entity)
                         {
+
+                            if (_context.Depth > 1)
+                            {
+                                _tracingService.Trace("Ignorando execução subsequente no mesmo contexto.");
+                                return;
+                            }
                             if (DeveGerarIdentificadorUnico(entity))
                             {
                                 var identificadorUnico = _repositorioOportunidade.GerarIdentificadorUnico();

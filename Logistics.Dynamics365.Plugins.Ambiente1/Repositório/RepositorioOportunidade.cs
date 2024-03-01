@@ -123,6 +123,56 @@ namespace Logistics.Dynamics365.Plugins.Ambiente1.Repositório
             {
                 Entity opportunityToSync = new Entity("opportunity");
 
+                if (oportunidade.Contains("parentcontactid"))
+                {
+                    _tracingService.Trace("Iniciando a verificação ou criação do contato no Ambiente 2.");
+
+                    EntityReference contatoRef = oportunidade.GetAttributeValue<EntityReference>("parentcontactid");
+
+                    Entity contato = _service.Retrieve(contatoRef.LogicalName, contatoRef.Id, new ColumnSet("lgs_cpf", "firstname", "lastname"));
+                    string cpf = contato.Contains("lgs_cpf") ? contato.GetAttributeValue<string>("lgs_cpf") : string.Empty;
+                    string contactName = contato.Contains("firstname") ? contato.GetAttributeValue<string>("firstname") : string.Empty;
+                    string contactLastName = contato.Contains("lastname") ? contato.GetAttributeValue<string>("lastname") : string.Empty;
+                    
+                    if (string.IsNullOrWhiteSpace(cpf))
+                    {
+                        _tracingService.Trace("CPF não encontrado para o contato no Ambiente 1. Não é possível verificar ou criar no Ambiente 2.");
+                        throw new InvalidPluginExecutionException("CPF é obrigatório para verificar ou criar o contato no Ambiente 2.");
+                    }
+                    _tracingService.Trace($"Tentando encontrar ou criar contato no Ambiente 2 com CPF: {cpf} e nome: {contactName}");
+
+                   var parentContactId = VerificarOuCriarContatoAmbiente2(_crmServiceClient, cpf, contactName,contactLastName, contatoRef.Id);
+                    _tracingService.Trace($"Contato verificado ou criado com sucesso no Ambiente 2. ID: {parentContactId}");
+                    opportunityToSync["parentcontactid"] = new EntityReference("contact", parentContactId);
+
+
+                }
+
+                if (oportunidade.Contains("parentaccountid"))
+                {
+                    _tracingService.Trace("Iniciando a verificação ou criação da conta no Ambiente 2.");
+
+                    EntityReference contaRef = oportunidade.GetAttributeValue<EntityReference>("parentaccountid");
+                    Entity conta = _service.Retrieve(contaRef.LogicalName, contaRef.Id, new ColumnSet("lgs_cnpj", "name"));
+                    string cnpj = conta.Contains("lgs_cnpj") ? conta.GetAttributeValue<string>("lgs_cnpj") : string.Empty;
+                    string accountName = conta.Contains("name") ? conta.GetAttributeValue<string>("name") : string.Empty;
+
+                    if (string.IsNullOrWhiteSpace(cnpj))
+                    {
+                        _tracingService.Trace("CNPJ não encontrado para a conta no Ambiente 1. Não é possível verificar ou criar no Ambiente 2.");
+                        throw new InvalidPluginExecutionException("CNPJ é obrigatório para verificar ou criar a conta no Ambiente 2.");
+                    }
+
+                    _tracingService.Trace($"Tentando encontrar ou criar conta no Ambiente 2 com CNPJ: {cnpj} e nome: {accountName}");
+
+                    var parentAccountId = VerificarOuCriarContaAmbiente2(_crmServiceClient, cnpj, accountName, contaRef.Id);
+
+                    _tracingService.Trace($"Conta verificada ou criada com sucesso no Ambiente 2. ID: {parentAccountId}");
+
+                    opportunityToSync["parentaccountid"] = new EntityReference("account", parentAccountId);
+                }
+
+
                 if (!oportunidade.Contains("lgs_opportunitynumber"))
                 {
                     if (_context.MessageName.ToLower() == "update")
@@ -148,15 +198,17 @@ namespace Logistics.Dynamics365.Plugins.Ambiente1.Repositório
                         throw new InvalidPluginExecutionException("O campo 'ID da Oportunidade' é obrigatório e não foi encontrado.");
                     }
                 }
+          
+                
 
                 opportunityToSync["lgs_opportunitynumber"] = oportunidade.GetAttributeValue<string>("lgs_opportunitynumber");
                 opportunityToSync["lgs_id_oportunidade_ambiente1"] = oportunidade.Id.ToString();
+               
                 opportunityToSync["lgs_integrada"] = true;
 
 
                 UpdateAttributeIfPresent(oportunidade, opportunityToSync, "name");
                 UpdateAttributeIfPresent(oportunidade, opportunityToSync, "lgs_opportunitynumber");
-                UpdateAttributeIfPresent(oportunidade, opportunityToSync, "parentcontactid");
                 UpdateAttributeIfPresent(oportunidade, opportunityToSync, "budgetamount");
                 UpdateAttributeIfPresent(oportunidade, opportunityToSync, "transactioncurrencyid");
                 UpdateAttributeIfPresent(oportunidade, opportunityToSync, "purchasetimeframe");
@@ -167,7 +219,6 @@ namespace Logistics.Dynamics365.Plugins.Ambiente1.Repositório
                 UpdateAttributeIfPresent(oportunidade, opportunityToSync, "customerneed");
                 UpdateAttributeIfPresent(oportunidade, opportunityToSync, "proposedsolution");
                 UpdateAttributeIfPresent(oportunidade, opportunityToSync, "estimatedvalue");
-                UpdateAttributeIfPresent(oportunidade, opportunityToSync, "parentaccountid"); 
                 UpdateAttributeIfPresent(oportunidade, opportunityToSync, "pricelevelid");
                 UpdateAttributeIfPresent(oportunidade, opportunityToSync, "isrevenuesystemcalculated");
                 UpdateAttributeIfPresent(oportunidade, opportunityToSync, "totallineitemamount");
@@ -262,6 +313,76 @@ namespace Logistics.Dynamics365.Plugins.Ambiente1.Repositório
                 throw;
             }
         }
+
+        public Guid VerificarOuCriarContatoAmbiente2(CrmServiceClient service, string cpf, string contactName,string contactLastName, Guid contactIdAmbiente1)
+        {
+            QueryExpression query = new QueryExpression("contact")
+            {
+                ColumnSet = new ColumnSet("contactid", "lgs_cpf", "lgs_id_contato_ambiente1"),
+                Criteria = new FilterExpression
+                {
+                    Conditions =
+                    {
+                new ConditionExpression("lgs_cpf", ConditionOperator.Equal, cpf),
+                new ConditionExpression("lgs_id_contato_ambiente1", ConditionOperator.Equal, contactIdAmbiente1.ToString())
+            }
+                }
+            };
+
+            EntityCollection result = service.RetrieveMultiple(query);
+
+            if (result.Entities.Count > 0)
+            {
+                return result.Entities[0].Id;
+            }
+            else
+            {
+                Entity newContact = new Entity("contact");
+                newContact["firstname"] = contactName;
+                newContact["lastname"] = contactLastName;
+                newContact["lgs_cpf"] = cpf;
+                newContact["lgs_id_contato_ambiente1"] = contactIdAmbiente1.ToString();
+
+                return service.Create(newContact);
+            }
+        }
+        public Guid VerificarOuCriarContaAmbiente2(CrmServiceClient service, string cnpj, string accountName, Guid accountIdAmbiente1)
+        {
+            QueryExpression query = new QueryExpression("account")
+            {
+                ColumnSet = new ColumnSet("accountid", "lgs_cnpj", "lgs_id_conta_ambiente1"), 
+                Criteria = new FilterExpression
+                {
+                    Conditions =
+            {
+                new ConditionExpression("lgs_cnpj", ConditionOperator.Equal, cnpj),
+                new ConditionExpression("lgs_id_conta_ambiente1", ConditionOperator.Equal, accountIdAmbiente1.ToString())
+            }
+                }
+            };
+
+            EntityCollection result = service.RetrieveMultiple(query);
+
+            if (result.Entities.Count > 0)
+            {
+                return result.Entities[0].Id;
+            }
+            else
+            {
+                Entity newAccount = new Entity("account");
+                newAccount["name"] = accountName; 
+                newAccount["lgs_cnpj"] = cnpj; 
+                newAccount["lgs_id_conta_ambiente1"] = accountIdAmbiente1.ToString(); 
+
+                return service.Create(newAccount);
+            }
+        }
+
+
+
+
+
+
 
     }
 
