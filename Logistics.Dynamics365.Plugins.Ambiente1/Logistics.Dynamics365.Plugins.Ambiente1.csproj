@@ -121,6 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actions\CepPlugin.cs" />
+    <Compile Include="Actions\CloneOportunidades.cs" />
     <Compile Include="Gerenciadores\GerenciadorConta.cs" />
     <Compile Include="Gerenciadores\GerenciadorContato.cs" />
     <Compile Include="Gerenciadores\GerenciadorOportunidade.cs" />
